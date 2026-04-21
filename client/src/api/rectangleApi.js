@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:5000/api";
+const BASE_URL = "https://rectangle-app-rvq3.onrender.com/api";
 
 // GET HISTORY
 export const getHistory = async () => {
