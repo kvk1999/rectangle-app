@@ -1,7 +1,7 @@
-const express = require("express");
-const cors = require("cors");
 require("dotenv").config();
 
+const express = require("express");
+const cors = require("cors");
 const connectDB = require("./config/db");
 
 const app = express();
@@ -10,18 +10,15 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// DB
+// ✅ CONNECT DATABASE
 connectDB();
 
 // Routes
 app.use("/api", require("./routes/rectangleRoutes"));
 
-// Error middleware
-app.use(require("./middleware/errorMiddleware"));
-
 // Server
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
