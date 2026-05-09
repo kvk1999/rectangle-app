@@ -1,57 +1,74 @@
-export default function HistoryList({ history, onDelete, onClear }) {
+export default function HistoryList({
+  history,
+  onDelete,
+  onClear,
+}) {
   return (
-    <div className="text-center">
+    <div>
 
-      <h2 className="font-semibold mb-2 text-black dark:text-white">
-        History
-      </h2>
+      {/* HEADER */}
+      <div className="flex flex-col sm:flex-row justify-between items-center gap-3 mb-5">
 
-      {/* CLEAR ALL */}
-      <button
-        onClick={onClear}
-        className="mb-3 px-3 py-1 bg-red-500 text-white rounded hover:scale-105 transition"
-      >
-        Clear All
-      </button>
+        <h2 className="text-xl font-bold text-gray-800">
+          Calculation History
+        </h2>
+
+        <button
+          onClick={onClear}
+          className="px-4 py-2 rounded-xl bg-red-500 text-white hover:bg-red-600 transition"
+        >
+          Clear All
+        </button>
+
+      </div>
 
       {/* TABLE */}
-      <div className="overflow-x-auto">
-        <table className="mx-auto text-sm border text-black dark:text-white">
+      <div className="overflow-x-auto rounded-2xl border border-gray-200">
 
-          <thead>
+        <table className="w-full text-center border-collapse">
+
+          <thead className="bg-gray-100">
             <tr>
-              <th className="px-2">Length</th>
-              <th className="px-2">Width</th>
-              <th className="px-2">Area</th>
-              <th className="px-2">Perimeter</th>
-              <th className="px-2">Diagonal</th>
-              <th className="px-2">Actions</th>
+              <th className="p-3">Length</th>
+              <th className="p-3">Width</th>
+              <th className="p-3">Area</th>
+              <th className="p-3">Perimeter</th>
+              <th className="p-3">Diagonal</th>
+              <th className="p-3">Action</th>
             </tr>
           </thead>
 
           <tbody>
             {history.length === 0 ? (
               <tr>
-                <td colSpan="6" className="py-2 text-gray-400">
-                  No history yet
+                <td
+                  colSpan="6"
+                  className="p-5 text-gray-400"
+                >
+                  No history available
                 </td>
               </tr>
             ) : (
               history.map((item) => (
-                <tr key={item._id} className="text-center">
+                <tr
+                  key={item._id}
+                  className="border-t hover:bg-gray-50 transition"
+                >
+                  <td className="p-3">{item.length}</td>
+                  <td className="p-3">{item.width}</td>
+                  <td className="p-3">{item.area}</td>
+                  <td className="p-3">{item.perimeter}</td>
 
-                  <td>{item.length}</td>
-                  <td>{item.width}</td>
-                  <td>{item.area}</td>
-                  <td>{item.perimeter}</td>
-                  <td>{item.diagonal?.toFixed(2)}</td>
+                  <td className="p-3">
+                    {item.diagonal.toFixed(2)}
+                  </td>
 
-                  <td>
+                  <td className="p-3">
                     <button
                       onClick={() => onDelete(item._id)}
-                      className="text-red-500 hover:scale-110 transition"
+                      className="px-3 py-1 rounded-lg bg-red-100 text-red-600 hover:bg-red-200 transition"
                     >
-                      🗑
+                      Delete
                     </button>
                   </td>
 
@@ -61,6 +78,7 @@ export default function HistoryList({ history, onDelete, onClear }) {
           </tbody>
 
         </table>
+
       </div>
 
     </div>

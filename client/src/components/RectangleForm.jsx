@@ -6,6 +6,7 @@ export default function RectangleForm({ onCalculate }) {
 
   const handleSubmit = () => {
     if (!length || !width) return;
+
     onCalculate(Number(length), Number(width));
   };
 
@@ -15,18 +16,17 @@ export default function RectangleForm({ onCalculate }) {
   };
 
   return (
-    <div className="flex flex-col items-center gap-3">
+    <div className="flex flex-col items-center gap-5">
 
       {/* INPUTS */}
-      <div className="flex gap-3">
+      <div className="flex flex-col sm:flex-row gap-4">
 
         <input
           type="number"
           placeholder="Length"
           value={length}
           onChange={(e) => setLength(e.target.value)}
-          className="w-24 sm:w-28 p-2 border rounded text-center 
-          bg-white dark:bg-black text-black dark:text-white"
+          className="w-40 p-3 rounded-xl border border-gray-300 text-center outline-none focus:ring-2 focus:ring-indigo-400"
         />
 
         <input
@@ -34,25 +34,24 @@ export default function RectangleForm({ onCalculate }) {
           placeholder="Width"
           value={width}
           onChange={(e) => setWidth(e.target.value)}
-          className="w-24 sm:w-28 p-2 border rounded text-center 
-          bg-white dark:bg-black text-black dark:text-white"
+          className="w-40 p-3 rounded-xl border border-gray-300 text-center outline-none focus:ring-2 focus:ring-indigo-400"
         />
 
       </div>
 
       {/* BUTTONS */}
-      <div className="flex gap-2">
+      <div className="flex gap-3">
 
         <button
           onClick={handleSubmit}
-          className="px-4 py-1 bg-indigo-500 text-white rounded hover:scale-105 transition"
+          className="px-6 py-2 rounded-xl bg-indigo-500 text-white font-medium hover:bg-indigo-600 transition duration-300"
         >
           Calculate
         </button>
 
         <button
           onClick={handleClear}
-          className="px-4 py-1 bg-gray-500 text-white rounded hover:scale-105 transition"
+          className="px-6 py-2 rounded-xl bg-gray-500 text-white font-medium hover:bg-gray-600 transition duration-300"
         >
           Clear
         </button>
