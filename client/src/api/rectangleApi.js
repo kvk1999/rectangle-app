@@ -1,51 +1,30 @@
-const BASE_URL = "https://rectangle-app-rvq3.onrender.com/api";
+const BASE_URL = "http://localhost:5000/api";
 
-// GET HISTORY
-export const getHistory = async () => {
-  try {
-    const res = await fetch(`${BASE_URL}/history`);
-    return await res.json();
-  } catch (err) {
-    console.error("Error fetching history:", err);
-    return [];
-  }
-};
-
-// CALCULATE
 export const calculateRectangle = async (length, width) => {
-  try {
-    const res = await fetch(`${BASE_URL}/calculate`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ length, width }),
-    });
-    return await res.json();
-  } catch (err) {
-    console.error("Error calculating:", err);
-    return null;
-  }
+  const res = await fetch(`${BASE_URL}/calculate`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ length, width }),
+  });
+
+  return await res.json();
 };
 
-// DELETE ONE
+export const getHistory = async () => {
+  const res = await fetch(`${BASE_URL}/history`);
+  return await res.json();
+};
+
 export const deleteItem = async (id) => {
-  try {
-    await fetch(`${BASE_URL}/history/${id}`, {
-      method: "DELETE",
-    });
-  } catch (err) {
-    console.error("Delete error:", err);
-  }
+  await fetch(`${BASE_URL}/history/${id}`, {
+    method: "DELETE",
+  });
 };
 
-// CLEAR ALL
 export const clearHistory = async () => {
-  try {
-    await fetch(`${BASE_URL}/history`, {
-      method: "DELETE",
-    });
-  } catch (err) {
-    console.error("Clear error:", err);
-  }
+  await fetch(`${BASE_URL}/history`, {
+    method: "DELETE",
+  });
 };
