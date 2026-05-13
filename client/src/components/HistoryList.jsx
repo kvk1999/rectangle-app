@@ -1,85 +1,212 @@
+// client/src/components/HistoryList.jsx
+
 export default function HistoryList({
   history,
   onDelete,
   onClear,
 }) {
   return (
-    <div>
+    <div className="space-y-6">
 
       {/* HEADER */}
-      <div className="flex flex-col sm:flex-row justify-between items-center gap-3 mb-5">
+      <div
+        className="
+        flex
+        flex-col
+        sm:flex-row
+        justify-between
+        items-center
+        gap-4
+        "
+      >
 
-        <h2 className="text-xl font-bold text-gray-800">
-          Calculation History
-        </h2>
+        <div>
+          <h2
+            className="
+            text-2xl
+            font-bold
+            text-gray-900
+            "
+          >
+            Calculation History
+          </h2>
+
+          <p
+            className="
+            text-sm
+            text-gray-500
+            mt-1
+            "
+          >
+            Recent rectangle calculations
+          </p>
+        </div>
 
         <button
           onClick={onClear}
-          className="px-4 py-2 rounded-xl bg-red-500 text-white hover:bg-red-600 transition"
+          className="
+          rounded-2xl
+          bg-red-500
+          px-5
+          py-3
+          text-white
+          font-medium
+          shadow-lg
+          transition
+          hover:bg-red-600
+          hover:scale-[1.02]
+          active:scale-95
+          "
         >
           Clear All
         </button>
 
       </div>
 
-      {/* TABLE */}
-      <div className="overflow-x-auto rounded-2xl border border-gray-200">
+      {/* EMPTY */}
+      {history.length === 0 ? (
+        <div
+          className="
+          rounded-3xl
+          border
+          border-dashed
+          border-gray-300
+          bg-white/60
+          p-10
+          text-center
+          "
+        >
 
-        <table className="w-full text-center border-collapse">
+          <p
+            className="
+            text-gray-500
+            text-lg
+            "
+          >
+            No history available
+          </p>
 
-          <thead className="bg-gray-100">
-            <tr>
-              <th className="p-3">Length</th>
-              <th className="p-3">Width</th>
-              <th className="p-3">Area</th>
-              <th className="p-3">Perimeter</th>
-              <th className="p-3">Diagonal</th>
-              <th className="p-3">Action</th>
-            </tr>
-          </thead>
+        </div>
+      ) : (
+        <div
+          className="
+          overflow-x-auto
+          rounded-3xl
+          border
+          border-gray-200
+          bg-white/60
+          "
+        >
 
-          <tbody>
-            {history.length === 0 ? (
+          <table
+            className="
+            w-full
+            min-w-[700px]
+            border-collapse
+            "
+          >
+
+            {/* HEAD */}
+            <thead
+              className="
+              bg-gray-100/80
+              "
+            >
               <tr>
-                <td
-                  colSpan="6"
-                  className="p-5 text-gray-400"
-                >
-                  No history available
-                </td>
+
+                <th className="p-4 text-sm font-semibold text-gray-700">
+                  Length
+                </th>
+
+                <th className="p-4 text-sm font-semibold text-gray-700">
+                  Width
+                </th>
+
+                <th className="p-4 text-sm font-semibold text-gray-700">
+                  Area
+                </th>
+
+                <th className="p-4 text-sm font-semibold text-gray-700">
+                  Perimeter
+                </th>
+
+                <th className="p-4 text-sm font-semibold text-gray-700">
+                  Diagonal
+                </th>
+
+                <th className="p-4 text-sm font-semibold text-gray-700">
+                  Action
+                </th>
+
               </tr>
-            ) : (
-              history.map((item) => (
+            </thead>
+
+            {/* BODY */}
+            <tbody>
+
+              {history.map((item) => (
                 <tr
                   key={item._id}
-                  className="border-t hover:bg-gray-50 transition"
+                  className="
+                  border-t
+                  border-gray-200
+                  transition
+                  hover:bg-gray-50/80
+                  "
                 >
-                  <td className="p-3">{item.length}</td>
-                  <td className="p-3">{item.width}</td>
-                  <td className="p-3">{item.area}</td>
-                  <td className="p-3">{item.perimeter}</td>
 
-                  <td className="p-3">
-                    {item.diagonal.toFixed(2)}
+                  <td className="p-4 text-center text-gray-700">
+                    {item.length}
                   </td>
 
-                  <td className="p-3">
+                  <td className="p-4 text-center text-gray-700">
+                    {item.width}
+                  </td>
+
+                  <td className="p-4 text-center font-semibold text-indigo-600">
+                    {item.area}
+                  </td>
+
+                  <td className="p-4 text-center font-semibold text-emerald-600">
+                    {item.perimeter}
+                  </td>
+
+                  <td className="p-4 text-center font-semibold text-pink-600">
+                    {Number(item.diagonal).toFixed(2)}
+                  </td>
+
+                  <td className="p-4 text-center">
+
                     <button
-                      onClick={() => onDelete(item._id)}
-                      className="px-3 py-1 rounded-lg bg-red-100 text-red-600 hover:bg-red-200 transition"
+                      onClick={() =>
+                        onDelete(item._id)
+                      }
+                      className="
+                      rounded-xl
+                      bg-red-100
+                      px-4
+                      py-2
+                      text-sm
+                      font-medium
+                      text-red-600
+                      transition
+                      hover:bg-red-200
+                      "
                     >
                       Delete
                     </button>
+
                   </td>
 
                 </tr>
-              ))
-            )}
-          </tbody>
+              ))}
 
-        </table>
+            </tbody>
 
-      </div>
+          </table>
+
+        </div>
+      )}
 
     </div>
   );

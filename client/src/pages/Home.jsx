@@ -1,4 +1,7 @@
+// client/src/pages/Home.jsx
+
 import { useEffect, useState } from "react";
+
 import RectangleForm from "../components/RectangleForm";
 import ResultDisplay from "../components/ResultDisplay";
 import HistoryList from "../components/HistoryList";
@@ -14,45 +17,64 @@ export default function Home() {
   const [result, setResult] = useState(null);
   const [history, setHistory] = useState([]);
 
+  // ✅ LOAD HISTORY
   useEffect(() => {
-    const fetchHistory = async () => {
+    const loadHistory = async () => {
       try {
         const data = await getHistory();
+
         setHistory(data || []);
       } catch (err) {
         console.error(err);
       }
     };
 
-    fetchHistory();
+    loadHistory();
   }, []);
 
-  const handleCalculate = async (length, width) => {
+  // ✅ CALCULATE
+  const handleCalculate = async (
+    length,
+    width
+  ) => {
     try {
-      const data = await calculateRectangle(length, width);
+      const data =
+        await calculateRectangle(
+          length,
+          width
+        );
+
       setResult(data);
 
-      const updated = await getHistory();
+      // refresh history
+      const updated =
+        await getHistory();
+
       setHistory(updated || []);
     } catch (err) {
       console.error(err);
     }
   };
 
+  // ✅ DELETE ONE
   const handleDelete = async (id) => {
     try {
       await deleteItem(id);
 
-      const updated = await getHistory();
+      const updated =
+        await getHistory();
+
       setHistory(updated || []);
     } catch (err) {
       console.error(err);
     }
   };
 
+  // ✅ CLEAR ALL
   const handleClear = async () => {
     try {
       await clearHistory();
+
       setHistory([]);
     } catch (err) {
       console.error(err);
@@ -61,36 +83,98 @@ export default function Home() {
 
   return (
     <div
-      className="min-h-screen bg-cover bg-center bg-no-repeat p-4 sm:p-6"
-      style={{ backgroundImage: "url('/bg.jpg')" }}
+      className="
+      min-h-screen
+      bg-cover
+      bg-center
+      bg-no-repeat
+      px-4
+      py-8
+      sm:px-6
+      lg:px-8
+      "
+      style={{
+        backgroundImage:
+          "url('/bg.jpg')",
+      }}
     >
-      {/* TOP CARD */}
-      <div className="flex justify-center">
-        <div className="w-full max-w-md sm:max-w-lg bg-white/90 backdrop-blur-md rounded-3xl shadow-2xl p-5 sm:p-6 space-y-6 border border-white/30">
+
+      {/* MAIN CONTAINER */}
+      <div className="max-w-6xl mx-auto">
+
+        {/* TOP CARD */}
+        <div
+          className="
+          max-w-2xl
+          mx-auto
+          rounded-[32px]
+          border
+          border-white/20
+          bg-white/70
+          backdrop-blur-xl
+          shadow-2xl
+          p-6
+          sm:p-8
+          space-y-8
+          "
+        >
 
           {/* HEADER */}
-          <div className="text-center space-y-2">
-            <h1 className="text-2xl sm:text-3xl font-bold text-gray-800">
+          <div className="text-center space-y-3">
+
+            <h1
+              className="
+              text-3xl
+              sm:text-4xl
+              font-bold
+              tracking-tight
+              text-gray-900
+              "
+            >
               Rectangle Calculator
             </h1>
 
-            <p className="text-sm text-gray-600">
+            <p
+              className="
+              text-sm
+              sm:text-base
+              text-gray-600
+              font-medium
+              "
+            >
               Area • Perimeter • Diagonal
             </p>
+
           </div>
 
           {/* FORM */}
-          <RectangleForm onCalculate={handleCalculate} />
+          <RectangleForm
+            onCalculate={
+              handleCalculate
+            }
+          />
 
           {/* RESULT */}
-          <ResultDisplay result={result} />
+          <ResultDisplay
+            result={result}
+          />
 
         </div>
-      </div>
 
-      {/* HISTORY */}
-      <div className="mt-8 flex justify-center">
-        <div className="w-full max-w-5xl bg-white/90 backdrop-blur-md rounded-3xl shadow-2xl p-5 border border-white/30">
+        {/* HISTORY */}
+        <div
+          className="
+          mt-10
+          rounded-[32px]
+          border
+          border-white/20
+          bg-white/70
+          backdrop-blur-xl
+          shadow-2xl
+          p-5
+          sm:p-8
+          "
+        >
 
           <HistoryList
             history={history}
@@ -99,6 +183,7 @@ export default function Home() {
           />
 
         </div>
+
       </div>
     </div>
   );

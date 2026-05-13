@@ -1,10 +1,16 @@
+// client/src/components/RectangleForm.jsx
+
 import { useState } from "react";
 
-export default function RectangleForm({ onCalculate }) {
+export default function RectangleForm({
+  onCalculate,
+}) {
   const [length, setLength] = useState("");
   const [width, setWidth] = useState("");
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
     if (!length || !width) return;
 
     onCalculate(Number(length), Number(width));
@@ -16,48 +22,160 @@ export default function RectangleForm({ onCalculate }) {
   };
 
   return (
-    <div className="flex flex-col items-center gap-5">
+    <form
+      onSubmit={handleSubmit}
+      className="space-y-6"
+    >
 
       {/* INPUTS */}
-      <div className="flex flex-col sm:flex-row gap-4">
+      <div
+        className="
+        flex
+        flex-col
+        sm:flex-row
+        justify-center
+        items-center
+        gap-4
+        "
+      >
 
-        <input
-          type="number"
-          placeholder="Length"
-          value={length}
-          onChange={(e) => setLength(e.target.value)}
-          className="w-40 p-3 rounded-xl border border-gray-300 text-center outline-none focus:ring-2 focus:ring-indigo-400"
-        />
+        {/* LENGTH */}
+        <div className="w-full sm:w-auto">
+          <label
+            className="
+            block
+            text-sm
+            font-medium
+            text-gray-700
+            mb-2
+            "
+          >
+            Length
+          </label>
 
-        <input
-          type="number"
-          placeholder="Width"
-          value={width}
-          onChange={(e) => setWidth(e.target.value)}
-          className="w-40 p-3 rounded-xl border border-gray-300 text-center outline-none focus:ring-2 focus:ring-indigo-400"
-        />
+          <input
+            type="number"
+            placeholder="Enter length"
+            value={length}
+            onChange={(e) =>
+              setLength(e.target.value)
+            }
+            className="
+            w-full
+            sm:w-52
+            rounded-2xl
+            border
+            border-gray-200
+            bg-white/80
+            px-4
+            py-3
+            text-center
+            text-gray-800
+            shadow-sm
+            outline-none
+            transition
+            focus:border-indigo-400
+            focus:ring-4
+            focus:ring-indigo-100
+            "
+          />
+        </div>
+
+        {/* WIDTH */}
+        <div className="w-full sm:w-auto">
+          <label
+            className="
+            block
+            text-sm
+            font-medium
+            text-gray-700
+            mb-2
+            "
+          >
+            Width
+          </label>
+
+          <input
+            type="number"
+            placeholder="Enter width"
+            value={width}
+            onChange={(e) =>
+              setWidth(e.target.value)
+            }
+            className="
+            w-full
+            sm:w-52
+            rounded-2xl
+            border
+            border-gray-200
+            bg-white/80
+            px-4
+            py-3
+            text-center
+            text-gray-800
+            shadow-sm
+            outline-none
+            transition
+            focus:border-indigo-400
+            focus:ring-4
+            focus:ring-indigo-100
+            "
+          />
+        </div>
 
       </div>
 
       {/* BUTTONS */}
-      <div className="flex gap-3">
+      <div
+        className="
+        flex
+        flex-col
+        sm:flex-row
+        justify-center
+        gap-3
+        "
+      >
 
         <button
-          onClick={handleSubmit}
-          className="px-6 py-2 rounded-xl bg-indigo-500 text-white font-medium hover:bg-indigo-600 transition duration-300"
+          type="submit"
+          className="
+          rounded-2xl
+          bg-indigo-500
+          px-6
+          py-3
+          text-white
+          font-semibold
+          shadow-lg
+          transition
+          hover:bg-indigo-600
+          hover:scale-[1.02]
+          active:scale-95
+          "
         >
           Calculate
         </button>
 
         <button
+          type="button"
           onClick={handleClear}
-          className="px-6 py-2 rounded-xl bg-gray-500 text-white font-medium hover:bg-gray-600 transition duration-300"
+          className="
+          rounded-2xl
+          bg-gray-200
+          px-6
+          py-3
+          text-gray-700
+          font-semibold
+          transition
+          hover:bg-gray-300
+          hover:scale-[1.02]
+          active:scale-95
+          "
         >
           Clear
         </button>
 
       </div>
 
-    </div>
+    </form>
   );
 }

@@ -1,29 +1,79 @@
-export default function ResultDisplay({ result }) {
+// client/src/components/ResultDisplay.jsx
+
+export default function ResultDisplay({
+  result,
+}) {
   if (!result) return null;
 
+  const cards = [
+    {
+      label: "Area",
+      value: result.area,
+      color:
+        "from-indigo-500 to-indigo-400",
+    },
+    {
+      label: "Perimeter",
+      value: result.perimeter,
+      color:
+        "from-emerald-500 to-emerald-400",
+    },
+    {
+      label: "Diagonal",
+      value: result.diagonal.toFixed(2),
+      color:
+        "from-pink-500 to-pink-400",
+    },
+  ];
+
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
+    <div
+      className="
+      grid
+      grid-cols-1
+      sm:grid-cols-3
+      gap-4
+      "
+    >
 
-      <div className="bg-indigo-100 rounded-2xl p-4 shadow-sm">
-        <h3 className="text-sm text-gray-500">Area</h3>
-        <p className="text-xl font-bold text-indigo-700">
-          {result.area}
-        </p>
-      </div>
+      {cards.map((card) => (
+        <div
+          key={card.label}
+          className={`
+          rounded-3xl
+          bg-gradient-to-br
+          ${card.color}
+          p-5
+          text-white
+          shadow-xl
+          transition
+          hover:scale-[1.03]
+          `}
+        >
 
-      <div className="bg-green-100 rounded-2xl p-4 shadow-sm">
-        <h3 className="text-sm text-gray-500">Perimeter</h3>
-        <p className="text-xl font-bold text-green-700">
-          {result.perimeter}
-        </p>
-      </div>
+          <p
+            className="
+            text-sm
+            font-medium
+            opacity-90
+            "
+          >
+            {card.label}
+          </p>
 
-      <div className="bg-pink-100 rounded-2xl p-4 shadow-sm">
-        <h3 className="text-sm text-gray-500">Diagonal</h3>
-        <p className="text-xl font-bold text-pink-700">
-          {result.diagonal.toFixed(2)}
-        </p>
-      </div>
+          <h2
+            className="
+            mt-2
+            text-3xl
+            font-bold
+            tracking-tight
+            "
+          >
+            {card.value}
+          </h2>
+
+        </div>
+      ))}
 
     </div>
   );
