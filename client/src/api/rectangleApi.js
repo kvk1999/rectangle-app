@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:5000/api";
+const BASE_URL = "https://ecommerceshop-hgbi.onrender.com/api";
 
 export const calculateRectangle = async (length, width) => {
   const res = await fetch(`${BASE_URL}/calculate`, {
