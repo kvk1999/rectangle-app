@@ -16,16 +16,21 @@ import {
 export default function Home() {
   const [result, setResult] = useState(null);
   const [history, setHistory] = useState([]);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   // ✅ LOAD HISTORY
   useEffect(() => {
     const loadHistory = async () => {
       try {
+        setError(null);
         const data = await getHistory();
 
         setHistory(data || []);
       } catch (err) {
-        console.error(err);
+        const errorMsg = err.message || 'Failed to load history';
+        console.error('Load history error:', err);
+        setError(`⚠️ Error loading history: ${errorMsg}`);
       }
     };
 
@@ -37,6 +42,8 @@ export default function Home() {
     length,
     width
   ) => {
+    setLoading(true);
+    setError(null);
     try {
       const data =
         await calculateRectangle(
@@ -52,13 +59,19 @@ export default function Home() {
 
       setHistory(updated || []);
     } catch (err) {
-      console.error(err);
+      const errorMsg = err.message || 'Failed to calculate rectangle';
+      console.error('Calculate error:', err);
+      setError(`❌ Error: ${errorMsg}`);
+      setResult(null);
+    } finally {
+      setLoading(false);
     }
   };
 
   // ✅ DELETE ONE
   const handleDelete = async (id) => {
     try {
+      setError(null);
       await deleteItem(id);
 
       const updated =
@@ -66,18 +79,23 @@ export default function Home() {
 
       setHistory(updated || []);
     } catch (err) {
-      console.error(err);
+      const errorMsg = err.message || 'Failed to delete item';
+      console.error('Delete error:', err);
+      setError(`⚠️ Error: ${errorMsg}`);
     }
   };
 
   // ✅ CLEAR ALL
   const handleClear = async () => {
     try {
+      setError(null);
       await clearHistory();
 
       setHistory([]);
     } catch (err) {
-      console.error(err);
+      const errorMsg = err.message || 'Failed to clear history';
+      console.error('Clear error:', err);
+      setError(`⚠️ Error: ${errorMsg}`);
     }
   };
 
@@ -119,6 +137,21 @@ export default function Home() {
           "
         >
 
+          {/* ERROR DISPLAY */}
+          {error && (
+            <div className="rounded-xl bg-red-100 border border-red-400 p-4 text-red-700">
+              {error}
+            </div>
+          )}
+
+          {/* LOADING INDICATOR */}
+          {loading && (
+            <div className="text-center py-4">
+              <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
+              <p className="text-gray-600 mt-2">Calculating...</p>
+            </div>
+          )}
+
           {/* HEADER */}
           <div className="text-center space-y-3">
 
@@ -152,6 +185,7 @@ export default function Home() {
             onCalculate={
               handleCalculate
             }
+            loading={loading}
           />
 
           {/* RESULT */}

@@ -4,6 +4,7 @@ import { useState } from "react";
 
 export default function RectangleForm({
   onCalculate,
+  loading = false,
 }) {
   const [length, setLength] = useState("");
   const [width, setWidth] = useState("");
@@ -11,7 +12,7 @@ export default function RectangleForm({
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!length || !width) return;
+    if (!length || !width || loading) return;
 
     onCalculate(Number(length), Number(width));
   };
@@ -60,6 +61,7 @@ export default function RectangleForm({
             onChange={(e) =>
               setLength(e.target.value)
             }
+            disabled={loading}
             className="
             w-full
             sm:w-52
@@ -77,6 +79,8 @@ export default function RectangleForm({
             focus:border-indigo-400
             focus:ring-4
             focus:ring-indigo-100
+            disabled:opacity-50
+            disabled:cursor-not-allowed
             "
           />
         </div>
@@ -102,6 +106,7 @@ export default function RectangleForm({
             onChange={(e) =>
               setWidth(e.target.value)
             }
+            disabled={loading}
             className="
             w-full
             sm:w-52
@@ -119,6 +124,8 @@ export default function RectangleForm({
             focus:border-indigo-400
             focus:ring-4
             focus:ring-indigo-100
+            disabled:opacity-50
+            disabled:cursor-not-allowed
             "
           />
         </div>
@@ -138,6 +145,7 @@ export default function RectangleForm({
 
         <button
           type="submit"
+          disabled={loading}
           className="
           rounded-2xl
           bg-indigo-500
@@ -150,14 +158,18 @@ export default function RectangleForm({
           hover:bg-indigo-600
           hover:scale-[1.02]
           active:scale-95
+          disabled:opacity-60
+          disabled:cursor-not-allowed
+          disabled:hover:scale-100
           "
         >
-          Calculate
+          {loading ? 'Calculating...' : 'Calculate'}
         </button>
 
         <button
           type="button"
           onClick={handleClear}
+          disabled={loading}
           className="
           rounded-2xl
           bg-gray-200
@@ -169,6 +181,9 @@ export default function RectangleForm({
           hover:bg-gray-300
           hover:scale-[1.02]
           active:scale-95
+          disabled:opacity-60
+          disabled:cursor-not-allowed
+          disabled:hover:scale-100
           "
         >
           Clear
