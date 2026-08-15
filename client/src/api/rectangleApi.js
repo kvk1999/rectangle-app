@@ -1,8 +1,5 @@
 // Use environment variable or default based on environment
-const BASE_URL = import.meta.env.VITE_API_URL || 
-  (import.meta.env.MODE === 'production' 
-    ? 'https://ecommerceshop-hgbi.onrender.com/api'
-    : 'http://localhost:5000/api');
+const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
 console.log('API Base URL:', BASE_URL);
 
